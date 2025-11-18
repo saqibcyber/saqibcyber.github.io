@@ -16,6 +16,8 @@ export const projects: Project[] = [
   featured: true,
   content: `
 
+![physical-network.png](/src/assets/physical-network.png)
+
 ## Overview
 
 Built a full Windows Server 2022 Active Directory environment designed to simulate real enterprise identity management. The project includes domain setup, Group Policy enforcement, security baselines, workstation automation, and centralized software deployment. The environment models how organizations control authentication, policy configuration, and system hardening at scale.
@@ -43,17 +45,9 @@ Built a full Windows Server 2022 Active Directory environment designed to simula
 
 ## Automation
 
-A custom PowerShell script automated workstation debloating across domain-joined machines:
+To automate hardening across domain-joined machines, I built **[dirsentinel](https://github.com/saqibcyber/dirsentinel)**. This PowerShell tool validates privileged group membership, enforces Kerberos and NTLM policies, configures audit settings, and disables insecure protocols—all driven by a single JSON configuration file.
 
-\`\`\`powershell
-Invoke-Command -ComputerName $targets -ScriptBlock {
-    Remove-AppxPackage "Microsoft.XboxApp"
-    Disable-ScheduledTask -TaskName "XblGameSaveTask"
-    # Additional debloat actions...
-}
-\`\`\`
-
-The script removed unnecessary apps, disabled telemetry, and reduced the attack surface while improving performance. Automating these tasks ensured consistent configuration across the domain.
+By automating these baseline controls, every environment rebuild began with a consistent, secured foundation suitable for identity-security testing and enterprise-grade simulations.
 
 ## Result
 
@@ -68,6 +62,9 @@ This project provided hands-on experience with enterprise-grade identity managem
   date: "2025-03",
   featured: true,
   content: `
+
+![physical-network.png](/src/assets/physical-network.png)
+
 # Network Overview
 
 ## Topology
@@ -119,6 +116,9 @@ This project delivers a secure, scalable home network leveraging pfSense, VLANs,
   date: "2025-03",
   featured: true,
   content: `
+
+![snort.png](/src/assets/snort.png)
+
 # Snort Overview
 Snort is an open-source IDS/IPS that inspects network traffic in real time to detect and block malicious activity. It protects against threats such as malware, scanning, and unauthorized access while providing detailed logging for proactive response.
 
@@ -154,6 +154,9 @@ This Snort deployment strengthens network security through real-time detection a
   date: "2025-03",
   featured: false,
   content: `
+
+![pihole.png](/src/assets/pihole.png)
+
 # Pi-Hole Overview
 Pi-Hole filters DNS requests to block ads, tracking domains, and malicious sites before they reach devices. This reduces attack surface, improves privacy by stopping third-party tracking, and enhances performance by eliminating unnecessary content.
 

@@ -16,7 +16,7 @@ export const projects: Project[] = [
   featured: true,
   content: `
 
-![physical-network.png](/src/assets/physical-network.png)
+![active directory dashboard](/ad.png)
 
 ## Overview
 
@@ -63,7 +63,7 @@ This project provided hands-on experience with enterprise-grade identity managem
   featured: true,
   content: `
 
-![physical-network.png](/src/assets/physical-network.png)
+![home network](/network.png)
 
 # Network Overview
 
@@ -117,7 +117,7 @@ This project delivers a secure, scalable home network leveraging pfSense, VLANs,
   featured: true,
   content: `
 
-![snort.png](/src/assets/snort.png)
+![snort dashboard](/snort.png)
 
 # Snort Overview
 Snort is an open-source IDS/IPS that inspects network traffic in real time to detect and block malicious activity. It protects against threats such as malware, scanning, and unauthorized access while providing detailed logging for proactive response.
@@ -155,7 +155,7 @@ This Snort deployment strengthens network security through real-time detection a
   featured: false,
   content: `
 
-![pihole.png](/src/assets/pihole.png)
+![pihole dashboard](/pihole.png)
 
 # Pi-Hole Overview
 Pi-Hole filters DNS requests to block ads, tracking domains, and malicious sites before they reach devices. This reduces attack surface, improves privacy by stopping third-party tracking, and enhances performance by eliminating unnecessary content.

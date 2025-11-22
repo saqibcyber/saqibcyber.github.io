@@ -13,7 +13,7 @@ export const projects: Project[] = [
     title: "Packet Tracer Topology",
     description: "Configured a multi-switch topology in Packet Tracer, validated network connectivity across hosts, and captured DNS traffic in Wireshark to understand name resolution and protocol behavior.",
     date: "2025-11-09",
-    featured: true,
+    featured: false,
     content: `
   
   ![packet tracer topology](/packet-tracer.png)

@@ -41,8 +41,8 @@ export const projects: Project[] = [
   },
   
   {
-    slug: "itsm-environment-itop",
-    title: "ITSM Environment in iTop",
+    slug: "itsm-network-itop",
+    title: "IT Service Management Architecture in iTop",
     description: "Built a full ITSM environment in iTop including organizational design, configuration items, change management, and incident documentation within a Docker-hosted ITIL platform.",
     date: "2025-11-18",
     featured: true,
@@ -212,7 +212,7 @@ export const projects: Project[] = [
   {
   slug: "active-directory-homelab",
   title: "Active Directory Homelab with PowerShell Automation",
-  description: "Built and hardened a Windows Server 2022 Active Directory environment with Group Policy, security baselines, and automated workstation debloating.",
+  description: "Built and hardened a Windows Server 2022 Active Directory environment with Group Policy, security baselines, and automated workstation hardening.",
   date: "2025-04-17",
   featured: true,
   content: `
@@ -257,129 +257,101 @@ This project provided hands-on experience with enterprise-grade identity managem
 },
 
 {
-  slug: "pfsense-network-vlans",
-  title: "pfSense Network & VLANs",
-  description: "A secure, scalable home network built with pfSense, managed switches, VLAN segmentation, and enterprise-style design principles. The setup emphasizes performance, security, and structured network architecture.",
-  date: "2025-03-10",
+  slug: "home-network",
+  title: "Home Network with pfSense, Snort, and Pi-Hole",
+  description: "Designed and implemented a secure, segmented home network using pfSense, managed switches, Snort IDS/IPS, and a Raspberry Pi–based Pi-Hole and Unbound DNS stack.",
+  date: "2025-03-27",
   featured: true,
   content: `
 
 ![home network](/network.png)
 
-# Network Overview
+## Overview
 
-## Topology
-The network uses a star topology with pfSense as the central router, supported by managed switches and mesh Wi-Fi access points. This structure simplifies management, improves scalability, and maintains high-speed coverage.
+This project builds an enterprise-style home network focused on security, segmentation, and observability. The environment uses pfSense as the core router and firewall, managed switches with VLANs, Snort for IDS/IPS, and a Raspberry Pi running Pi-Hole with Unbound for private, filtered DNS. Together, these components provide layered defense, better performance, and clearer visibility into network activity.
 
-- **pfSense Router:** Core router, firewall, and VPN gateway.
-- **Managed Switches:** Interlinked switches expanding wired connectivity and segmentation.
-- **Wireless APs:** Mesh configuration providing consistent wireless coverage.
+## Topology and Design
 
-## IP Scheme
-Critical infrastructure uses static IPs, while general devices use DHCP for flexibility and easier administration.
+The network follows a star topology with pfSense at the center, connected to managed switches and mesh wireless access points.
 
-# Network Infrastructure
+- pfSense router: Core router, firewall, and VPN gateway
+- Managed switches: Interlinked to expand wired connectivity and support VLAN segmentation
+- Wireless access points: Mesh configuration for consistent coverage
 
-## pfSense
-pfSense provides granular control, strong security tooling, VPN support, traffic shaping, and monitoring. Its open-source flexibility enables performance tuning beyond consumer router capabilities.
+Critical infrastructure such as pfSense, Pi-Hole, and core services use static IPs, while end-user devices rely on DHCP for simpler administration.
 
-## IoT VLAN
-IoT devices are isolated in a dedicated VLAN, reducing attack surface and preventing lateral movement. This segmentation simplifies traffic control and monitoring.
+## pfSense Core and VLAN Segmentation
 
-# Challenges
+pfSense provides routing, firewalling, VPN, and traffic shaping for the entire network. Its open-source flexibility allows tuning beyond consumer-grade routers and supports features like granular rules, policy-based routing, and service monitoring.
 
-## ISP Modem
-The ISP modem could not run in bridge mode, causing double NAT and breaking external access services. A DMZ configuration was used to expose pfSense directly, allowing it to receive the public IP and manage all routing.
+A dedicated IoT VLAN isolates smart devices and untrusted endpoints from the main LAN. This reduces the attack surface and limits lateral movement if an IoT device is compromised. Inter-switch links are configured as trunk ports to carry multiple VLANs, and Spanning Tree Protocol (STP) is enabled to prevent loops between switches.
 
-## Interlinked Switches
-Loop risks between switches required enabling STP to prevent redundant paths. The inter-switch link was configured as a trunk port to carry multiple VLANs, ensuring stability and proper segmentation.
+### ISP Modem and DMZ
 
-# Security Principles
+The ISP modem could not be fully bridged, which introduced double NAT and broke external access services. To resolve this, the modem was configured with a DMZ pointing at the pfSense WAN address. This allows pfSense to effectively receive the public IP and manage all routing, firewalling, and port forwarding.
 
-## Secure by Design
-Security is integrated from the start through pfSense, firewall rules, and VLAN-based segmentation.
-
-## Separation of Duties
-Routers, switches, and access points each handle distinct responsibilities, reducing single-point failures and improving manageability.
-
-## Defense in Depth
-Layers of protection include firewalling, VPN, mesh Wi-Fi security, and VLAN isolation, ensuring resilience even if one control is compromised.
-
-# Conclusion
-This project delivers a secure, scalable home network leveraging pfSense, VLANs, STP, and enterprise-style design principles. Challenges such as double NAT and switch loops were resolved with a DMZ setup and proper switch configuration, resulting in a stable, high-performance environment.
-`
-},
-
-{
-  slug: "snort-ids-ips-implementation",
-  title: "Snort IDS/IPS Implementation",
-  description: "A pfSense-based Snort IDS/IPS deployment providing real-time threat detection, traffic analysis, and active prevention while balancing accuracy and performance. The system protects against attacks by using tuned rules, reduced false positives, and optimized resource usage.",
-  date: "2025-03-27",
-  featured: true,
-  content: `
-
-![snort dashboard](/snort.png)
-
-# Snort Overview
-Snort is an open-source IDS/IPS that inspects network traffic in real time to detect and block malicious activity. It protects against threats such as malware, scanning, and unauthorized access while providing detailed logging for proactive response.
-
-# Install
-Snort was installed through pfSense’s Package Manager and configured on the LAN interface for focused monitoring of internal traffic. Monitoring LAN reduces unnecessary alerts compared to the WAN interface, where external scans and benign noise create excessive false positives.
-
-# Configuring Rules
-Snort was fine-tuned using targeted rule categories:
-
-- **Signature rules:** Focus on high-risk services like HTTP and SMB to detect known attack patterns.
-- **Anomaly rules:** Identify abnormal traffic behavior without generating excess alerts.
-- **ICMP and scan detection:** Block DDoS attempts, ping sweeps, and port scans.
-- **Application-layer rules:** Inspect HTTP and DNS traffic for threats like SQL injection or XSS.
-- **Alert thresholds:** Log suspicious activity without overwhelming the system.
-
-# Challenges
-
-## False Positives
-Default rules generated excessive noise. Narrowing the ruleset to high-risk services, creating pass lists for legitimate traffic, and adjusting thresholding significantly reduced false alerts while maintaining detection accuracy.
-
-## Network Traffic Overhead
-Real-time inspection initially strained pfSense resources. Limiting monitoring to the LAN interface and optimizing logging reduced overhead, resulting in manageable CPU and RAM usage with no noticeable impact on network performance.
-
-# Conclusion
-This Snort deployment strengthens network security through real-time detection and prevention, tuned rulesets, and careful performance optimization. Reducing false positives and minimizing overhead ensures balanced protection while maintaining smooth network operation.
-`
-},
-
-{
-  slug: "recursive-pi-hole-dns-server",
-  title: "Recursive Pi-Hole DNS Server",
-  description: "A Raspberry Pi–based recursive Pi-Hole deployment providing network-wide ad blocking, malicious domain filtering, and private DNS resolution through Unbound. The setup improves security, privacy, and performance across all devices.",
-  date: "2025-03",
-  featured: false,
-  content: `
+## DNS and Privacy Layer with Pi-Hole and Unbound
 
 ![pihole dashboard](/pihole.png)
 
-# Pi-Hole Overview
-Pi-Hole filters DNS requests to block ads, tracking domains, and malicious sites before they reach devices. This reduces attack surface, improves privacy by stopping third-party tracking, and enhances performance by eliminating unnecessary content.
+A Raspberry Pi runs Pi-Hole to provide network-wide DNS filtering and ad blocking. Raspberry Pi OS was installed, Pi-Hole was deployed via script, and a static IPv4 address was assigned to ensure consistent DNS availability.
 
-# Install
-Raspberry Pi OS was flashed onto a Pi and Pi-Hole installed via script. A static IPv4 address was assigned to ensure consistent DNS resolution and avoid disruptions.
+Curated blocklists target malware, advertising, and tracking domains while avoiding redundancy. This combination reduces attack surface and improves privacy without adding noticeable latency.
 
-# Blocklists
-Blocklists were curated to target malware, ads, and trackers while minimizing redundancy. High-quality, frequently updated lists were chosen to reduce overhead and maintain efficient DNS performance.
+Unbound is configured as a local recursive DNS resolver behind Pi-Hole. Instead of relying on third-party DNS providers, the network resolves queries directly from the root servers with DNSSEC validation. This improves privacy, integrity, and resilience while often delivering faster responses once cached.
 
-# Unbound DNS
-Unbound was configured as a recursive DNS resolver, enabling Pi-Hole to resolve queries locally without third-party DNS providers. With DNSSEC validation and recursive resolution, the setup improves privacy, integrity, and speed.
+### Integrating pfSense and Pi-Hole
 
-# Challenges
+pfSense originally used external DNS resolvers, which bypassed Pi-Hole. To integrate the stack:
 
-## pfSense Setup
-pfSense initially relied on external DNS servers, requiring configuration adjustments to route DNS queries to Pi-Hole and Unbound. The Raspberry Pi was set as the primary DNS server, with correct forwarding and firewall rules ensuring proper communication.
+- The Raspberry Pi running Pi-Hole and Unbound was set as the primary DNS server in pfSense
+- Firewall rules and routing were adjusted so clients send DNS queries through pfSense to Pi-Hole
+- Testing confirmed that all client DNS traffic was filtered and resolved recursively
 
-## Increased Overhead
-Strict blocklists created redundancy and added latency. The solution was selecting targeted, non-overlapping lists focused on malware, ads, and trackers, maintaining strong protection without degrading performance.
+Tuning blocklists to avoid overlap reduced overhead and prevented unnecessary latency.
 
-# Conclusion
-This project implements a secure, privacy-focused DNS infrastructure using Pi-Hole and Unbound on a Raspberry Pi. By optimizing blocklists, resolving pfSense routing challenges, and adopting recursive resolution, the network gains resilient DNS filtering, reduced tracking, and faster, safer browsing.
+## IDS/IPS with Snort on pfSense
+
+![snort dashboard](/snort.png)
+
+Snort was installed via the pfSense Package Manager and bound to the LAN interface. Monitoring LAN traffic rather than WAN reduces noise from unsolicited external scans and focuses inspection on traffic that actually reaches internal devices.
+
+Rule tuning included:
+
+- Signature rules focused on high-risk services such as HTTP and SMB
+- Anomaly rules to detect unusual traffic patterns without flooding alerts
+- ICMP and scan detection for ping sweeps, port scans, and basic DDoS behavior
+- Application-layer rules to inspect HTTP and DNS traffic for threats such as SQL injection or cross-site scripting
+- Alert thresholding to log suspicious events without overwhelming the system
+
+### False Positives and Performance
+
+Default rules generated too many false positives and strained resources. Refinements included:
+
+- Narrowing enabled rule categories to those most relevant to the environment
+- Creating pass lists for known legitimate hosts and services
+- Adjusting thresholds to reduce repetitive alerts
+
+Monitoring was limited to key interfaces and events to keep CPU and RAM usage within comfortable limits. After tuning, Snort provided meaningful alerts without noticeable impact on network performance.
+
+## Security Principles
+
+The overall design follows several security principles:
+
+- Secure by design: Security is integrated into the architecture using pfSense, Snort, Pi-Hole, and VLANs rather than treated as an add-on
+- Separation of duties: Routers, switches, wireless access points, IDS/IPS, and DNS each serve distinct roles, reducing reliance on any single device
+- Defense in depth: Layers of firewall rules, segmentation, DNS filtering, and intrusion detection provide multiple chances to catch or contain threats
+
+## Challenges and Resolutions
+
+- Double NAT from the ISP gateway was resolved using a DMZ configuration that exposes pfSense directly
+- Switch loops were avoided by enabling STP and using proper trunk configuration for interlinked switches
+- DNS routing was corrected so that all client queries flow through Pi-Hole and Unbound instead of external resolvers
+- False positives and performance issues in Snort were addressed by tightening rulesets, using pass lists, and tuning thresholds
+
+## Conclusion
+
+This project delivers a layered home network security architecture using pfSense, VLANs, Pi-Hole with Unbound, and Snort IDS/IPS. The result is a segmented, observable, and privacy-focused environment that closely resembles an enterprise network on a smaller scale. Challenges such as double NAT, switch loops, DNS routing, and IDS noise were resolved through careful design and tuning, resulting in a stable, high-performance, and security-focused home lab.
 `
 }
 

@@ -9,6 +9,41 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "automated-soc",
+    title: "Fully Automated SOC with Splunk, Wazuh & TheHive",
+    description: "A full end-to-end SOC lab environment demonstrating automated detection, case creation, enrichment, and response using open-source security tools and custom automation scripts.",
+    date: "2025-11-24",
+    featured: true,
+    content: `
+  ## Overview
+This project implements a streamlined SOC environment that simulates attacker activity, detects malicious behavior, generates cases, enriches indicators, and executes automated response actions. The lab integrates open-source security tools with Python and PowerShell automation to demonstrate a complete detection-to-response workflow.
+
+## Environment Setup
+The lab environment consists of five core components supporting telemetry collection, alerting, case management, and automated response:
+- A Kali Linux attacker VM used to generate malicious activity.
+- A Windows 10 endpoint with a Wazuh agent for event forwarding.
+- A Wazuh server providing EDR, FIM, and log pipeline capabilities.
+- A Splunk instance for log ingestion, correlation, and alert generation.
+- TheHive for case management and orchestration workflows.
+These components form a minimal SOC ecosystem capable of detecting threats and executing automated playbooks.
+
+## Architecture
+Telemetry from the Windows endpoint flows through Wazuh and is forwarded to Splunk for analysis. When Splunk correlation searches match attacker behavior, an alert triggers external automation that creates cases in TheHive, enriches observables, and performs response actions. Scripts interact with Wazuh, TheHive, and third-party intelligence APIs to support decision-making and automated containment.
+
+## Automation Workflow
+- Kali Linux initiates reconnaissance, brute-force activity, and malware simulations. Wazuh forwards endpoint events to Splunk, where a correlation search identifies suspicious behavior and generates an alert.  
+- A Python script creates a TheHive case populated with artifacts from the alert. Additional automation enriches indicators using VirusTotal, AbuseIPDB, and Wazuh log queries, adding results to the case. 
+- Response scripts isolate the Windows endpoint, terminate malicious processes, or disable compromised accounts.  
+- Once steps are completed, a summary is logged automatically into TheHive and the case transitions to a resolved state.
+
+The automation scripts are available [here](https://github.com/saqibcyber/socflow).
+
+## Reflection
+This lab demonstrates how individual SOC components—EDR, SIEM, case management, and automation—combine to form a cohesive detection and response pipeline. Automating enrichment and containment significantly reduces analyst workload and improves response speed, while the clean separation of detection, case handling, and remediation supports a scalable workflow suitable for real security operations.
+  `
+  },
+
+  {
     slug: "packet-tracer-toplogy",
     title: "Packet Tracer Topology",
     description: "Configured a multi-switch topology in Packet Tracer, validated network connectivity across hosts, and captured DNS traffic in Wireshark to understand name resolution and protocol behavior.",
@@ -41,71 +76,50 @@ export const projects: Project[] = [
   },
   
   {
-    slug: "itsm-network-itop",
-    title: "IT Service Management Architecture in iTop",
-    description: "Built a full ITSM environment in iTop including organizational design, configuration items, change management, and incident documentation within a Docker-hosted ITIL platform.",
+    slug: "it-service-desk-lab",
+    title: "IT Service Desk Environment with Jira Service Desk, iTop & MediaWiki (Docker)",
+    description: "A containerized IT service desk environment integrating Jira Service Desk for ticketing, iTop for CMDB and ITIL workflows, and MediaWiki for knowledge documentation, supported by a simulated Windows 10 end-user system.",
     date: "2025-11-18",
     featured: true,
     content: `
-  ![itop docker dashboard](/itop.png)
+  ![itop dashboard](/itop.png)
 
-  ## Overview
+## Overview
+This project creates a fully containerized IT service desk environment that mirrors how modern IT organizations manage service requests, track assets, and document troubleshooting knowledge. Jira Service Desk, iTop, and MediaWiki are deployed in Docker and integrated into a cohesive workflow supported by a simulated Windows 10 end-user system. A monitoring layer powered by Nagios provides proactive alerting, ensuring realistic service visibility.  
+The lab demonstrates how ticketing, configuration management, knowledge sharing, and monitoring align under ITIL practices to support an efficient, transparent service desk operation.
 
-  This project demonstrates the creation of a complete ITSM environment using iTop, deployed within a Docker container. The lab covers the full lifecycle of ITIL-aligned service management activities, including environment deployment, organizational modeling, configuration item creation, change request handling, and structured incident documentation. The goal was to gain hands-on experience with ITSM processes and understand how iTop supports real-world service management workflows.
+## Key Components
+- **Jira Service Desk:** The central ticketing and request-fulfillment platform where users report issues and IT staff manage service requests.  
+- **iTop:** The CMDB and ITIL-aligned management system used to track IT assets, relate CIs to incidents and changes, and provide context for troubleshooting.  
+- **MediaWiki:** The knowledge base where solutions, troubleshooting procedures, and internal documentation are recorded and maintained.  
+- **Nagios:** The monitoring system that provides proactive visibility, automatically generating alerts that feed directly into the service desk to support early incident detection.  
+- **Windows 10 Endpoint:** A realistic end-user system used to generate authentic support scenarios and validate the full workflow from issue to resolution.
 
-  ## Environment Deployment
+## Environment Deployment
+Each component of the environment was deployed using Docker to keep the setup modular and consistent. Jira Service Desk was configured as the central ticketing platform, with its web portal exposed for end-user access. iTop was deployed using the \`vbukin/itop\` container image and configured as the CMDB and ITIL workflow engine. MediaWiki was deployed in a separate container stack to host the internal knowledge base.  
+Nagios was added to the environment as a monitoring system feeding alerts into the service desk. Once all containers were running, I verified connectivity and confirmed that each platform was reachable through a browser.
 
-  To begin, I installed Windows Subsystem for Linux (WSL) and Docker Desktop as prerequisites. After confirming Docker was running, I deployed an iTop container using:
+A standalone Windows 10 VM served as the end-user environment. Although not containerized, it played a key role in simulating real-world interactions, including accessing the Jira portal, experiencing user-facing issues, and viewing documented knowledge articles.
 
-  \`docker run -d -p 800:80 --name itop-smaje4212 vbukin/itop\`
+## User Workflow Simulation
+To test the integrated environment, I simulated a common IT support scenario. A Windows 10 user experienced an issue such as internet connectivity failure or an inability to log in. After basic troubleshooting failed, the user navigated to the Jira Service Desk portal and submitted a ticket describing the issue.
 
-  I accessed the installation wizard through the browser and deployed the demo ITIL environment. During installation, a MariaDB authentication issue required updating the root password inside the container. After resolving this, the environment deployed successfully and I logged into the iTop interface to begin configuration.
+Once the request reached the IT team, the technician accessed iTop to look up the user’s workstation CI. The CMDB provided detailed configuration, ownership, and dependency information that helped the technician narrow down potential causes.  
+To ensure a consistent and documented process, the technician consulted MediaWiki for a troubleshooting article related to connectivity or login issues. The documented steps helped guide the resolution process, ensuring repeatability and alignment with best practices.
 
-  ## Organizational Structure and Documentation
+If the issue related to a system monitored by Nagios, the service desk could also see real-time alerts that helped correlate the user’s symptoms with active system conditions—further reducing diagnosis time.
 
-  I created a full organizational hierarchy starting with the top-level entity Sentinel Security Inc. and added six internal departments beneath it. In the documentation module, I created two organizational documents, a mission statement and a vision statement, and linked them to Sentinel. This reinforced how high-level strategy and structure are represented within an ITSM platform.
+## Resolution and Documentation
+Using asset insights from iTop and step-by-step guidance from MediaWiki, the IT team resolved the issue and restored normal functionality to the user’s Windows 10 system. The technician updated the Jira ticket with the resolution steps, linked the affected asset from iTop, and referenced the Wiki documentation used during troubleshooting.
 
-  ## Configuration Items, Contacts, and Teams
+This created a complete record of the incident that connected user symptoms, configuration context, knowledge-driven procedures, and final remediation—all essential components of an ITIL-aligned support process.
 
-  I verified the running container through \`docker ps -a\` before continuing with CI and contact creation. Inside iTop, I created three contacts and assigned each to the appropriate department.  
-  I then created a team named Specialists and added all contacts to build a capability-based group.
-
-  For configuration management, I created a workstation CI named SM4212-Workstation, populated ownership and organizational attributes, and linked it to my own contact. This section highlighted the ITIL distinction between:
-
-  - Resources (hardware, individuals)  
-  - Capabilities (skills, knowledge, and group expertise)
-
-  The workstation functioned as a resource, while the Specialists team represented a capability.
-
-  ## Change Request Management
-
-  I created a dedicated user account (smajeed4212) and linked it to my contact with a technician profile. I then created a new CI, SM4212-NAS01, before submitting a Normal Change Request titled Upgrade Storage on SM4212-NAS01.
-
-  The RFC included:
-  - A 20TB storage upgrade plan  
-  - A detailed implementation procedure  
-  - A rollback and backout plan  
-  - CAB considerations and risk notes  
-
-  This reflected a normal change under ITIL classifications, as it was non-routine but not urgent or emergency-level.
-
-  ## Incident Documentation
-
-  I reviewed example incident formats before drafting a formal report in Word for incident I-000002. The report included SIEM alert details, affected systems, technician actions, and timestamps.
-
-  In iTop, I recreated the incident with matching data and linked related CIs:
-  - SM4212-SpongebobPC  
-  - SM4212-DC  
-  - SM4212-Splunk
-
-  I added impact and urgency values, root cause analysis, troubleshooting notes, and a final resolution. A printer-friendly PDF was generated to validate completeness and formatting.
-
-  ## Conclusion
-
-  This project provided hands-on experience implementing ITIL processes within an ITSM platform. From environment deployment to organizational modeling, CI management, change handling, and incident documentation, each stage reinforced how structured service management supports operational stability and transparency. Building the ITSM environment in iTop demonstrated how real organizations track assets, manage changes, and document incidents in an industry-aligned system.
+## Reflection
+Integrating Jira Service Desk, iTop, MediaWiki, and Nagios within a Docker-based environment provides a realistic demonstration of how modern IT service desks operate. The workflow shows how ticketing, CMDB data, knowledge documentation, and monitoring work together to support accurate, efficient, and repeatable IT support.  
+The lab offers a practical understanding of ITIL principles and highlights how containerized environments can be used to simulate complete service desk ecosystems for training, portfolio projects, and operational practice.
   `
-  },
-
+},
+  
   {
     slug: "laptop-disassembly-reassembly",
     title: "Laptop Disassembly and Reassembly",

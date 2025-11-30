@@ -15,7 +15,10 @@ export const projects: Project[] = [
     date: "2025-11-24",
     featured: true,
     content: `
-  ## Overview
+
+![splunk dashboard](/splunk.png)
+
+## Overview
 This project implements a streamlined SOC environment that simulates attacker activity, detects malicious behavior, generates cases, enriches indicators, and executes automated response actions. The lab integrates open-source security tools with Python and PowerShell automation to demonstrate a complete detection-to-response workflow.
 
 ## Environment Setup

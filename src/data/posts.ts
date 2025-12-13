@@ -7,7 +7,80 @@ export interface BlogPost {
 }
 
 export const posts: BlogPost[] = [
-
+  {
+    slug: "why-you-should-self-host",
+    title: "Why You Should Self-Host",
+    summary: "Self-hosting is one of the most effective ways to build real cybersecurity skills while gaining full control over your data, infrastructure, and security posture.",
+    date: "2025-12-13",
+    content: `
+  
+  ## Overview
+  
+  If you are interested in cybersecurity, self-hosting is one of the most valuable things you can do. It turns abstract security concepts into real responsibilities. Instead of relying on managed platforms to hide complexity, you are forced to understand how systems are exposed, how they fail, and how they are defended.
+  
+  For the past three months, I have been self-hosting a public-facing website from my own homelab. It is not a lab that resets after a demo. It is a live service on the Internet, reachable by anyone, and that reality fundamentally changes how you think about security.
+  
+  ## Control Over the Entire Stack
+  
+  Self-hosting gives you full ownership of your infrastructure. You decide how the server is configured, how updates are applied, and how services are exposed. There is no abstraction layer silently making security decisions for you.
+  
+  You control:
+  - The operating system and patching cadence  
+  - Firewall rules and network segmentation  
+  - Database access, backups, and recovery  
+  - Logging, monitoring, and alerting  
+  
+  This level of control forces you to think defensively at every layer, not just the application.
+  
+  ## Security Becomes Practical
+  
+  When your service is public, security stops being theoretical. You see scanning, malformed requests, and brute-force attempts in real logs. You learn quickly which ports should never be exposed and how small misconfigurations can create real risk.
+  
+  Self-hosting teaches you:
+  - How traffic actually reaches your application  
+  - Why DMZs and segmentation matter  
+  - How reverse proxies and TLS protect services  
+  - How least privilege reduces blast radius  
+  
+  These lessons are difficult to internalize when everything is handled by a cloud provider.
+  
+  ## Privacy and Data Ownership
+  
+  Self-hosting keeps your data under your control. There is no third party collecting telemetry, analyzing traffic, or retaining logs unless you choose to enable it. This is especially important for educational, community-driven, or sensitive projects.
+  
+  You decide where data lives, how long it is retained, and who can access it. That autonomy is increasingly rare on modern platforms and deeply relevant to cybersecurity.
+  
+  ## Real-World Experience That Actually Matters
+  
+  Running a self-hosted service mirrors how small organizations operate production systems. You are responsible for uptime, backups, updates, and incident response. When something breaks, there is no support ticket to open. You fix it.
+  
+  Over the past three months of running a public-facing site, I have gained experience with:
+  - Internet-exposed threat modeling  
+  - Secure network design and segmentation  
+  - Containerized services and recovery planning  
+  - Monitoring, abuse detection, and log analysis  
+  
+  This is the kind of experience that translates directly to security operations and infrastructure roles.
+  
+  ## Why This Matters for Breaking Into Cybersecurity
+  
+  Self-hosting demonstrates initiative and ownership. It shows that you understand systems beyond theory and certifications. It also gives you real scenarios to talk about in interviews, not hypothetical ones.
+  
+  You can explain:
+  - How you exposed a service securely  
+  - What threats you anticipated and mitigated  
+  - How you handled updates, failures, and risk  
+  
+  That credibility is hard to fake and easy to recognize.
+  
+  ## Conclusion
+  
+  Self-hosting is not the easiest path, but it is one of the most educational. It builds intuition around control, security, privacy, and responsibility that no managed platform can replicate.
+  
+  If you want to break into cybersecurity, stop relying solely on platforms that abstract everything away. Build something, expose it carefully, secure it properly, and keep it running. The lessons you learn will stay with you far longer than any checklist or tutorial.
+  `
+  },
+  
   {
     "slug": "teaching-security-awareness-without-boring-people",
     "title": "How to Teach Security Awareness Without Boring People",
@@ -105,52 +178,52 @@ By focusing on relatable examples, simple stories, and active learning, it becom
   },
   
 
-  {
-    slug: "active-directory-hardening-guide",
-    title: "Active Directory Hardening Guide",
-    summary: "A practical, security-focused guide for hardening Active Directory against common attack vectors.",  
-    date: "2025-04-21",
-    content: `
+    {
+      slug: "active-directory-hardening-guide",
+      title: "Active Directory Hardening Guide",
+      summary: "A practical, security-focused guide for hardening Active Directory against common attack vectors.",  
+      date: "2025-04-21",
+      content: `
 
-## Overview
+  ## Overview
 
-Active Directory (AD) is the core identity and access management system in most enterprise networks, making it a high-value target. A compromise often results in full domain takeover, so hardening AD is essential. This guide summarizes the most effective security practices to reduce attack surface, restrict privilege escalation, and defend against identity-based threats.
+  Active Directory (AD) is the core identity and access management system in most enterprise networks, making it a high-value target. A compromise often results in full domain takeover, so hardening AD is essential. This guide summarizes the most effective security practices to reduce attack surface, restrict privilege escalation, and defend against identity-based threats.
 
-## Key Strategies
+  ## Key Strategies
 
-### Least Privilege
+  ### Least Privilege
 
-Limit accounts and systems to only the access they need. Create separate admin and user accounts, avoid shared credentials, apply role-based access using security groups, and use a Tiered Access Model (Tier 0–2) to isolate high-privilege operations. Regularly audit accounts for unused privileges, unusual logins, and privilege creep.
+  Limit accounts and systems to only the access they need. Create separate admin and user accounts, avoid shared credentials, apply role-based access using security groups, and use a Tiered Access Model (Tier 0–2) to isolate high-privilege operations. Regularly audit accounts for unused privileges, unusual logins, and privilege creep.
 
-### Identity and Access Management (IAM)
+  ### Identity and Access Management (IAM)
 
-Strengthen authentication and directory communication:
+  Strengthen authentication and directory communication:
 
-- Disable LAN Manager (LM) hash storage  
-- Require SMB signing to prevent MiTM attacks  
-- Require LDAP signing to block replay and injection attacks  
-- Enforce strong password policies (10–14 characters, history, complexity)  
-- Implement MFA for privileged accounts  
-- Rotate sensitive passwords regularly or use Group Managed Service Accounts (gMSAs)
+  - Disable LAN Manager (LM) hash storage  
+  - Require SMB signing to prevent MiTM attacks  
+  - Require LDAP signing to block replay and injection attacks  
+  - Enforce strong password policies (10–14 characters, history, complexity)  
+  - Implement MFA for privileged accounts  
+  - Rotate sensitive passwords regularly or use Group Managed Service Accounts (gMSAs)
 
-### Kerberoasting Defense
+  ### Kerberoasting Defense
 
-Kerberoasting targets service accounts with Service Principal Names (SPNs) by extracting and cracking Kerberos tickets offline. Reduce exposure by:
+  Kerberoasting targets service accounts with Service Principal Names (SPNs) by extracting and cracking Kerberos tickets offline. Reduce exposure by:
 
-- Using long, complex service account passwords  
-- Rotating passwords regularly or using gMSAs  
-- Applying MFA where possible  
-- Auditing accounts with SPNs and removing unnecessary ones  
-- Monitoring for abnormal TGS requests and common Kerberoasting tools  
+  - Using long, complex service account passwords  
+  - Rotating passwords regularly or using gMSAs  
+  - Applying MFA where possible  
+  - Auditing accounts with SPNs and removing unnecessary ones  
+  - Monitoring for abnormal TGS requests and common Kerberoasting tools  
 
-### Ongoing Monitoring
+  ### Ongoing Monitoring
 
-AD security is continuous. Review logs, track privilege changes, monitor authentication behavior, and re-audit controls regularly. Detecting unusual activity early greatly reduces risk.
+  AD security is continuous. Review logs, track privilege changes, monitor authentication behavior, and re-audit controls regularly. Detecting unusual activity early greatly reduces risk.
 
-## Conclusion
+  ## Conclusion
 
-Hardening Active Directory protects the core of an organization’s identity infrastructure. Through least privilege, strong IAM practices, Kerberoasting mitigation, and continuous monitoring, organizations can significantly limit attack vectors and strengthen their overall security posture. AD security isn’t a single configuration—it’s a long-term defensive strategy that safeguards the entire network.
-`
+  Hardening Active Directory protects the core of an organization’s identity infrastructure. Through least privilege, strong IAM practices, Kerberoasting mitigation, and continuous monitoring, organizations can significantly limit attack vectors and strengthen their overall security posture. AD security isn’t a single configuration—it’s a long-term defensive strategy that safeguards the entire network.
+  `
   },
 
   {

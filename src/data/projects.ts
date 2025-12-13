@@ -9,6 +9,66 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "self-hosted-webapp",
+    title: "Securing a Self-Hosted Public-Facing Web App",
+    description: "Designed and secured a public-facing web application hosted from a Lenovo ThinkCentre Mini PC, emphasizing network segmentation, container security, and defense-in-depth for Internet-exposed services.",
+    date: "2025-12-13",
+    featured: true,
+    content: `
+  
+  ![mini pc](/minipc.png)
+  
+  ## Overview
+
+  This project documents the secure self-hosting of *Majaalis*, a public-facing web platform that serves as a curated repository of educational YouTube playlists. The application stores playlist links and structured metadata in a SQL database and presents them through a minimal web interface. The primary goal was to simulate a real-world production hosting environment from a home lab while applying cybersecurity best practices across the network, host, and and application layers.
+
+  The platform is hosted on a dedicated Lenovo ThinkCentre Mini PC operating as an always-on application server. The system was selected for its enterprise-grade reliability, low power consumption, and suitability for continuous operation in a homelab setting.
+
+  ## System Architecture and Stack
+
+  The application stack is fully containerized to ensure isolation, repeatability, and simplified recovery. The web application and PostgreSQL database run in separate containers, with configuration and secrets managed through environment variables rather than hardcoded values. This approach reduces the blast radius of potential compromises and enables rapid redeployment if needed.
+
+  Key components include:
+  - A web application serving curated playlist content  
+  - PostgreSQL for structured metadata storage  
+  - Docker for service isolation and portability  
+
+  ## Network Exposure and Security Design
+
+  Because the application is publicly accessible, special care was taken to control how traffic enters the network. A reverse proxy is used to terminate TLS and route HTTPS traffic to the internal application container. Only the required ports are exposed through the firewall, and the database is strictly bound to internal interfaces to prevent direct access.
+
+  An external edge proxy such as Cloudflare is placed in front of the service to hide the home IP address, provide TLS certificates, apply rate limiting, and offer basic protection against automated scanning and denial-of-service attempts.
+
+  ## Segmentation and Host Hardening
+
+  The ThinkCentre server is isolated within a dedicated server VLAN or DMZ to prevent lateral movement into the rest of the home network. This design mirrors enterprise DMZ architecture and ensures that a compromised web service cannot directly reach personal devices.
+
+  Host-level security measures include:
+  - A minimal Linux installation with automatic security updates  
+  - SSH restricted to key-based authentication with root login disabled  
+  - A host firewall limiting administrative access to trusted sources  
+
+  Reducing the number of running services and tightening administrative access significantly lowers the system’s attack surface.
+
+  ## Application Security, Monitoring, and Backups
+
+  At the application layer, least-privilege principles are enforced by using restricted database roles and externalized secrets. HTTPS is enforced end-to-end, and input validation is handled within the application to reduce the risk of common web vulnerabilities.
+
+  Operational visibility and abuse protection are provided through:
+  - Reverse proxy access and error logging  
+  - Rate limiting on public endpoints  
+  - Brute-force protection using tools such as Fail2ban  
+  - Traffic analytics and visibility via the edge proxy  
+
+  To ensure resilience, scheduled PostgreSQL backups are taken and stored off-host. Because the entire environment is containerized, the application can be rebuilt quickly in the event of data loss, compromise, or hardware failure.
+
+  ## Result
+
+  This project demonstrates how a public-facing web application can be securely hosted from a home environment using enterprise-style security principles. It provided hands-on experience with network segmentation, host hardening, containerized workloads, and real-world threat considerations for Internet-exposed services. The resulting environment closely resembles how small organizations deploy and protect externally accessible applications while maintaining strong internal security boundaries.
+  `
+  },
+  
+  {
     slug: "automated-soc",
     title: "Fully Automated SOC with Splunk, Wazuh & TheHive",
     description: "A full end-to-end SOC lab environment demonstrating automated detection, case creation, enrichment, and response using open-source security tools and custom automation scripts.",

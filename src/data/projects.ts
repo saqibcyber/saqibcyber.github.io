@@ -12,7 +12,7 @@ export const projects: Project[] = [
   slug: "laptop-deployment-and-imaging",
   title: "Laptop Hardware Servicing and Windows Deployment Lifecycle",
   description: "Combined laptop disassembly and reassembly with enterprise-style Windows 10 deployment, driver injection, and disk imaging to simulate real-world endpoint provisioning and recovery workflows.",
-  date: "2025-10-17",
+  date: "2025-12-8",
   featured: true,
   content: `
 

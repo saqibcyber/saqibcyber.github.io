@@ -8,6 +8,44 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+{
+  slug: "laptop-deployment-and-imaging",
+  title: "Laptop Hardware Servicing and Windows Deployment Lifecycle",
+  description: "Combined laptop disassembly and reassembly with enterprise-style Windows 10 deployment, driver injection, and disk imaging to simulate real-world endpoint provisioning and recovery workflows.",
+  date: "2025-10-17",
+  featured: true,
+  content: `
+
+![laptop internal view](/laptop.png)
+
+## Overview
+
+This project demonstrates a complete endpoint lifecycle commonly encountered in IT support and systems administration. It combines hands-on laptop hardware servicing with standardized Windows 10 deployment, driver integration, and full-disk imaging. The objective was to validate both physical system integrity and software readiness while following practices used in managed enterprise environments.
+
+## Hardware Servicing and System Preparation
+
+The lab began by preparing a clean workspace and assembling a laptop repair kit with precision tools. A functional classroom laptop was powered down and safely disassembled by removing the bottom cover and disconnecting the internal battery to eliminate electrical risk. Core components including the storage drive, RAM module, and keyboard assembly were removed in a controlled sequence, with careful attention to screw organization, cable routing, and component handling.
+
+After inspection, the laptop was reassembled by reversing the teardown steps. All components were securely reinstalled, the chassis was closed, and the system powered on successfully, confirming correct reassembly and hardware functionality.
+
+## Windows Image Customization and Deployment
+
+With the hardware verified, a standardized Windows 10 deployment was prepared for a Dell Latitude E5450. An official Windows 10 ISO was downloaded using Microsoft’s Media Creation Tool to ensure a trusted base image. The Dell Windows 10 (64-bit) driver pack was retrieved from the vendor support site and validated using a SHA-256 hash check.
+
+The driver package was extracted and injected into the Windows image after converting the \`install.esd\` file to a writable WIM format. PowerShell was used to identify the correct Windows 10 Pro index, mount the image, and add vendor drivers recursively before committing the changes.
+
+A bootable USB installer was created and used to perform a clean Windows installation on the laptop. The Out-of-Box Experience was completed offline, and the system was verified to load correctly with full hardware support.
+
+## Imaging and Validation
+
+To enable system recovery and redeployment, Clonezilla was used to capture a full disk image of the installed system. The image was created with compression and integrity checks enabled and stored on external media. The process was validated by restoring a Clonezilla image and confirming a fully functional Windows environment after deployment.
+
+## Result
+
+This project reflects real-world IT workflows that span hardware servicing, operating system deployment, driver management, and system recovery. It reinforced safe handling of compact mobile hardware while providing practical experience with standardized Windows provisioning and disk imaging—core skills required in enterprise IT support, endpoint management, and technical operations roles.
+  `
+},
+
   {
     slug: "self-hosted-webapp",
     title: "Securing a Self-Hosted Public-Facing Web App",
@@ -183,33 +221,6 @@ The lab offers a practical understanding of ITIL principles and highlights how c
   `
 },
   
-  {
-    slug: "laptop-disassembly-reassembly",
-    title: "Laptop Disassembly and Reassembly",
-    description: "Performed a complete teardown and rebuild of a laptop to practice safe handling, documentation, and hardware troubleshooting within compact mobile systems.",
-    date: "2025-10-17",
-    featured: false,
-    content: `
-  
-  ![laptop internal view](/laptop.png)
-
-  ## Preparation
-  
-  The lab began by organizing a clean workspace and gathering a laptop repair kit containing precision screwdrivers and prying tools. After selecting a functional classroom laptop, the system was fully powered down to eliminate electrical risk. This ensured a safe starting point before any internal components were exposed.
-  
-  ## Disassembly
-  
-  Using the repair kit, the bottom cover was opened by removing the screws and carefully prying around the chassis. Once inside, the battery was identified and disconnected to further reduce electrical hazards. Additional internal components such as the storage drive, RAM module, and keyboard assembly were removed in a controlled sequence. Throughout the process, attention was placed on screw placement, cable routing, and safe handling to support accurate reassembly.
-  
-  ## Reassembly
-  
-  The laptop was reassembled by reversing the teardown steps. Each internal component was reattached securely, cables were reconnected, and the chassis was clipped and screwed back into place. After reassembly, the laptop powered on without issues, confirming that the system remained functional and the teardown was performed correctly.
-  
-  ## Conclusion
-  
-  This lab highlighted the differences between servicing laptops and traditional desktops, particularly the challenges introduced by compact form factors and non-removable components. Working within tighter constraints reinforced the need for careful planning, proper documentation, and hardware awareness in IT environments. The exercise strengthened practical troubleshooting skills and provided a clearer understanding of how mobile systems are designed and maintained.
-  `
-  },
   
   {
     slug: "windows10-system-administration",
